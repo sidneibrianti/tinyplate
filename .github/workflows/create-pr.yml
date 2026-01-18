@@ -1,0 +1,39 @@
+name: Create Pull Request
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'PR Title'
+        required: true
+        type: string
+      body:
+        description: 'PR Description'
+        required: false
+        type: string
+      base:
+        description: 'Base branch'
+        required: false
+        default: 'main'
+        type: string
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: ${{ inputs.title }}
+          title: ${{ inputs.title }}
+          body: ${{ inputs.body }}
+          base: ${{ inputs.base }}
+          branch: ${{ github.ref_name }}
