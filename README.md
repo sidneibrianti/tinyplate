@@ -1,10 +1,10 @@
 # tinyplate
 
-Boilerplate de skills do Claude Code para projetos Next.js.
+Boilerplate de prompts do GitHub Copilot para projetos Next.js.
 
 ## O que é isso?
 
-Uma coleção de skills e agents pré-configurados para o Claude Code, prontos para usar em qualquer projeto.
+Uma coleção de prompts pré-configurados para o GitHub Copilot, prontos para usar em qualquer projeto.
 
 ## Como Usar
 
@@ -15,82 +15,110 @@ git clone git@github.com:andrehfp/tinyplate.git
 cd tinyplate
 ```
 
-### 2. Copie a pasta `.claude/` para seu projeto
+### 2. Copie a pasta `.github/copilot/` para seu projeto
 
 ```bash
-cp -r .claude/ /caminho/do/seu/projeto/
+cp -r .github/copilot/ /caminho/do/seu/projeto/.github/
 ```
 
-### 3. Abra o Claude Code no seu projeto
+### 3. Use os prompts no VS Code
 
-```bash
-cd /caminho/do/seu/projeto
-claude
-```
+No VS Code com GitHub Copilot Chat, você pode referenciar os prompts usando `@workspace` ou abrindo os arquivos diretamente.
 
-### 4. Use as skills
+## Prompts Incluídos
 
-```bash
-/posthog        # Analytics & Feature Flags
-/seo-technical  # SEO para Next.js
-/marketing-copy # Copywriting Direct Response
-/ux-design      # UX Design
-/stripe         # Pagamentos Stripe
-/abacatepay     # Pagamentos PIX
-```
+### Skills de Integração
 
-## Skills Incluídas
+| Prompt | Descrição |
+|--------|-----------|
+| `posthog.prompt.md` | Analytics, feature flags, session replay com reverse proxy |
+| `seo-technical.prompt.md` | SEO técnico: sitemaps, meta tags, structured data |
+| `marketing-copy.prompt.md` | Copy usando Elevated Direct Response framework |
+| `ux-design.prompt.md` | UX com princípios Jobs-era Apple |
+| `stripe.prompt.md` | Checkout, webhooks, subscriptions, customer portal |
+| `abacatepay.prompt.md` | Pagamentos PIX para o mercado brasileiro |
+| `cloudflare.prompt.md` | DNS, domínios, email routing, R2 storage |
+| `favicon.prompt.md` | Geração de favicons e app icons |
 
-| Skill | Descrição |
-|-------|-----------|
-| `posthog` | Analytics, feature flags, session replay com reverse proxy |
-| `seo-technical` | SEO técnico: sitemaps, meta tags, structured data |
-| `marketing-copy` | Copy usando Elevated Direct Response framework |
-| `ux-design` | UX com princípios Jobs-era Apple |
-| `stripe` | Checkout, webhooks, subscriptions, customer portal |
-| `abacatepay` | Pagamentos PIX para o mercado brasileiro |
+### Commands de Git
 
-## Agents Incluídos
+| Prompt | Descrição |
+|--------|-----------|
+| `commit.prompt.md` | Stage all changes e cria commit com mensagem AI |
+| `push.prompt.md` | Push da branch atual para o remote |
+| `pr.prompt.md` | Cria Pull Request no GitHub |
+| `ship.prompt.md` | Commit + Push + PR em um só comando |
 
-| Agent | Descrição |
-|-------|-----------|
-| `security-auditor` | Auditoria de segurança para APIs, database, auth |
+### Agents Especializados
+
+| Prompt | Descrição |
+|--------|-----------|
+| `security-auditor.prompt.md` | Auditoria de segurança para APIs, database, auth |
 
 ## Estrutura
 
 ```
-.claude/
-├── CLAUDE.md              # Instruções base
-├── settings.local.json    # Configurações do Claude Code
-├── skills/
-│   ├── posthog/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   ├── seo-technical/
-│   ├── marketing-copy/
-│   ├── ux-design/
-│   ├── stripe/
-│   └── abacatepay/
-└── agents/
-    └── security-auditor.md
+.github/
+└── copilot/
+    ├── instructions.md        # Instruções base do Copilot
+    └── prompts/
+        ├── posthog.prompt.md
+        ├── seo-technical.prompt.md
+        ├── marketing-copy.prompt.md
+        ├── ux-design.prompt.md
+        ├── stripe.prompt.md
+        ├── abacatepay.prompt.md
+        ├── cloudflare.prompt.md
+        ├── favicon.prompt.md
+        ├── commit.prompt.md
+        ├── push.prompt.md
+        ├── pr.prompt.md
+        ├── ship.prompt.md
+        └── security-auditor.prompt.md
 ```
 
 ## Personalização
 
-### Adicionar novas skills
+### Adicionar novos prompts
 
-1. Crie uma pasta em `.claude/skills/nome-da-skill/`
-2. Adicione um arquivo `SKILL.md` com as instruções
-3. Opcionalmente, adicione uma pasta `references/` com documentação
+1. Crie um arquivo em `.github/copilot/prompts/nome-do-prompt.prompt.md`
+2. Adicione o frontmatter com `mode`, `description` e `tools`
+3. Escreva as instruções do prompt
 
-### Modificar skills existentes
+### Formato do Prompt
 
-Edite o arquivo `SKILL.md` ou os arquivos em `references/` conforme necessário.
+```markdown
+---
+mode: agent
+description: "Descrição do que o prompt faz"
+tools: ["editFiles", "codebase", "terminal", "fetch"]
+---
+
+# Título do Prompt
+
+Instruções detalhadas aqui...
+```
+
+### Modificar prompts existentes
+
+Edite os arquivos `.prompt.md` conforme necessário.
+
+## Migração do Claude Code
+
+Este repositório foi convertido do formato Claude Code (`.claude/`) para o formato GitHub Copilot (`.github/copilot/`).
+
+| Claude Code | GitHub Copilot |
+|-------------|----------------|
+| `.claude/CLAUDE.md` | `.github/copilot/instructions.md` |
+| `.claude/skills/*/SKILL.md` | `.github/copilot/prompts/*.prompt.md` |
+| `.claude/commands/*.md` | `.github/copilot/prompts/*.prompt.md` |
+| `.claude/agents/*.md` | `.github/copilot/prompts/*.prompt.md` |
 
 ## Requisitos
 
-- [Claude Code CLI](https://claude.ai/code)
-- Conta Anthropic com acesso ao Claude Code
+- [VS Code](https://code.visualstudio.com/)
+- [GitHub Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+- [GitHub Copilot Chat Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat)
 
 ## Licença
 
